@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>PoxNews Management</title>
+    </head>
+    <body>
+        <h1>PoxNews Management - News</h1>
+
+        <h2>Add a new</h2>
+
+        <div>
+            Enter title, ingress, image and text and press Submit:<br/>
+            <form action="/newsobject" method="POST" enctype="multipart/form-data">
+                Title: <input type="text" name="title" id="title"/><br/>
+                Ingress: <input type="text" name="ingress" id="ingress"/><br/>
+                Text: <input type="text" name="text" id="text"/><br/>
+                <input type="file" name="file" id="file"/>
+                <input type="submit"/>            
+            </form>
+        </div>
+
+        <div><a href="/management">management</a></div>
+    </body>
+</html>

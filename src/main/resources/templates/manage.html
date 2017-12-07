@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>PoxNews Management</title>
+    </head>
+    <body>
+        <h1>PoxNews Management - News</h1>
+
+        <span th:text="${newsObject.title}">title</span><br/>
+        <span th:text="${newsObject.ingress}">ingress</span><br/>
+        <span><img th:src="@{/management/{id}/image(id=${newsObject.id})}"/></span><br/>
+        <span th:text="${newsObject.text}">text</span><br/>
+        <span th:text="${newsObject.releaseDate}">date</span><br/>
+        <form th:action="@{/management/{newsObjectId}(newsObjectId=${newsObject.id})}" th:method="DELETE">
+            <input type="submit" value="Remove"/>
+        </form><br/>
+
+        <span>Authors:</span>
+        <div>
+            <h2>Assign to author</h2>
+
+            <form method="POST" th:action="@{/management/{newId}/author(newId=${newsObject.id})}">
+                <select name="authorId">
+                    <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name}">author</option>
+                </select>
+                <input type="submit" value="Assign" id="add-to-movie"/>
+            </form>
+        </div>
+        <ul>
+            <li th:each="author : ${newsObject.authors}" th:text="${author.name}">jcvd?</li>
+        </ul>
+
+        <span>Categories:</span>
+        <div>
+            <h2>Assign to category</h2>
+
+            <form method="POST" th:action="@{/management/{newId}/category(newId=${newsObject.id})}">
+                <select name="categoryId">
+                    <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">category</option>
+                </select>
+                <input type="submit" value="Assign" id="add-to-movie"/>
+            </form>
+        </div>
+        <ul>
+            <li th:each="category : ${newsObject.categories}" th:text="${category.name}">jcvd?</li>
+        </ul>
+
+        <div><a href="/management">management</a></div>
+    </body>
+</html>

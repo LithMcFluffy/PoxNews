@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>PoxNews Management</title>
+    </head>
+    <body>
+        <h1>PoxNews Management</h1>
+        
+        <div><a href="/newsobject">Add a new</a></div>
+        <div><a href="/author">Add/Remove an author</a></div>
+        <div><a href="/category">Add/Remove a category</a></div>
+
+        <h2>News: </h2>
+        
+        <ol>
+            <li th:each="newsObject : ${news}">
+                <span th:text="${newsObject.title}">title</span><br/>
+                <span th:text="${newsObject.ingress}">ingress</span><br/>
+                <span><img th:src="@{/management/{id}/image(id=${newsObject.id})}"/></span><br/>
+                <span th:text="${newsObject.text}">text</span><br/>
+                <span th:text="${newsObject.releaseDate}">date</span><br/>
+
+                <span>Authors:</span>
+                <ul>
+                    <li th:each="author : ${newsObject.authors}" th:text="${author.name}">jcvd?</li>
+                </ul>
+                
+                <span>Categories:</span>
+                <ul>
+                    <li th:each="category : ${newsObject.categories}" th:text="${category.name}">jcvd?</li>
+                </ul>
+                <form th:action="@{/management/{newsObjectId}(newsObjectId=${newsObject.id})}" th:method="GET">
+                    <input type="submit" value="Manage"/>
+                </form><br/>
+            </li>
+        </ol>
+        <div><a href="/">menu</a></div>
+    </body>
+</html>
