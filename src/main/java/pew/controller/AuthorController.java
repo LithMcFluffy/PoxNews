@@ -1,6 +1,7 @@
 
 package pew.controller;
 
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +42,7 @@ public class AuthorController {
         return "redirect:/author";
     }
     
+    @Transactional
     @DeleteMapping("/author/{authorId}")
     public String deleteCategory(@PathVariable Long authorId){
         Author auto = autoRepo.getOne(authorId);

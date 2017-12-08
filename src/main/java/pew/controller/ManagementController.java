@@ -51,14 +51,11 @@ public class ManagementController {
         return new ResponseEntity<>(n.getImage(), headers, HttpStatus.CREATED);
     }
     
+    @Transactional
     @GetMapping("/management/{id}")
     public String manage(Model model, @PathVariable Long id){
         NewsObject n = newRepo.getOne(id);
-        
-        for(Author a : n.getAuthors()){
-            System.out.println(a.getName());
-        }
-        for(int i=0; i<5; i++) System.out.println(" ");
+        model.addAttribute("newsObject", n);
  
         List<Author> authors = autoRepo.findAll();
         List<Category> categories = catRepo.findAll();
@@ -69,12 +66,12 @@ public class ManagementController {
             if (categories.contains(c)) categories.remove(c);
         }
         
-        model.addAttribute("newsObject", n);
         model.addAttribute("authors", authors);
         model.addAttribute("categories", categories);
         return "manage";
     }
     
+    @Transactional
     @PostMapping("/management/{newId}/author")
     public String assignAuthor(@PathVariable Long newId, @RequestParam Long authorId){
         NewsObject n = newRepo.getOne(newId);
@@ -86,6 +83,7 @@ public class ManagementController {
         return "redirect:/management";
     }
     
+    @Transactional
     @PostMapping("/management/{newId}/category")
     public String assignCategory(@PathVariable Long newId, @RequestParam Long categoryId){
         NewsObject n = newRepo.getOne(newId);
@@ -97,6 +95,7 @@ public class ManagementController {
         return "redirect:/management";
     }
     
+    @Transactional
     @DeleteMapping("/management/{id}")
     public String del(@PathVariable Long id){
         NewsObject n = newRepo.getOne(id);

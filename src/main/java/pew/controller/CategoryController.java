@@ -1,6 +1,7 @@
 
 package pew.controller;
 
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,6 +41,7 @@ public class CategoryController {
         return "redirect:/category";
     }
     
+    @Transactional
     @DeleteMapping("/category/{categoryId}")
     public String deleteCategory(@PathVariable Long categoryId){
         Category cat = catRepo.getOne(categoryId);
