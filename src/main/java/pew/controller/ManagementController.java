@@ -80,7 +80,7 @@ public class ManagementController {
         a.addNew(n);
         newRepo.save(n);
         autoRepo.save(a);
-        return "redirect:/management";
+        return "redirect:/management/"+newId;
     }
     
     @Transactional
@@ -92,7 +92,7 @@ public class ManagementController {
         c.addNew(n);
         newRepo.save(n);
         catRepo.save(c);
-        return "redirect:/management";
+        return "redirect:/management/"+newId;
     }
     
     @Transactional
