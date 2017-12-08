@@ -20,6 +20,7 @@ public class NewsObject extends AbstractPersistable<Long>{
     
     @Lob
     private byte[] image;
+    
     private String contentType;
     private Long size;
     

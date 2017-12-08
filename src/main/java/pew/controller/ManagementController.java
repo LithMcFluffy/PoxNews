@@ -2,6 +2,7 @@
 package pew.controller;
 
 import java.util.List;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,7 @@ public class ManagementController {
         return "management";
     }
     
+    @Transactional
     @GetMapping("/management/{id}/image")
     public ResponseEntity<byte[]> getImage(@PathVariable Long id){
         NewsObject n = newRepo.getOne(id);
