@@ -35,6 +35,7 @@ public class NewsController {
     @Autowired
     private NewRepository newRepo;
     
+    @Transactional
     @GetMapping("/news")
     public String home(Model model){
         Pageable pa = PageRequest.of(0, 5, Sort.Direction.DESC, "date");
@@ -43,12 +44,14 @@ public class NewsController {
         return "news";
     }
     
+    @Transactional
     @GetMapping("/news/recent")
     public String sortByReleaseDate(Model model){
         model.addAttribute("news", newRepo.findAllByOrderByDateDesc());
         return "news";
     }
     
+    @Transactional
     @GetMapping("/news/category/{name}")
     public String listByCategory(Model model, @PathVariable String name){
         Category cat = catRepo.findByName(name);
@@ -57,6 +60,7 @@ public class NewsController {
         return "news";
     }
     
+    @Transactional
     @GetMapping("/news/popular")
     public String listByPopularity(Model model){
         List<NewsObject> news = newRepo.findAll();
