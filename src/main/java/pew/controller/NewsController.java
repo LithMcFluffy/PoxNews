@@ -1,12 +1,14 @@
 
 package pew.controller;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import pew.domain.Author;
 import pew.domain.Category;
 import pew.domain.NewsObject;
 import pew.repository.AuthorRepository;
@@ -36,13 +37,56 @@ public class NewsController {
     
     @GetMapping("/news")
     public String home(Model model){
-        model.addAttribute("news", newRepo.findAll());
+        Pageable pa = PageRequest.of(0, 5, Sort.Direction.DESC, "date");
+        model.addAttribute("news", newRepo.findAll(pa));
+        model.addAttribute("categories", catRepo.findAll());
+        return "news";
+    }
+    
+    @GetMapping("/news/recent")
+    public String sortByReleaseDate(Model model){
+        model.addAttribute("news", newRepo.findAllByOrderByDateDesc());
+        return "news";
+    }
+    
+    @GetMapping("/news/category/{name}")
+    public String listByCategory(Model model, @PathVariable String name){
+        Category cat = catRepo.findByName(name);
+        model.addAttribute("news", cat.getNews());
+        model.addAttribute("categories", catRepo.findAll());
+        return "news";
+    }
+    
+    @GetMapping("/news/popular")
+    public String listByPopularity(Model model){
+        List<NewsObject> news = newRepo.findAll();
+        Collections.sort(news,
+                 new Comparator<NewsObject>()
+                 {
+                     public int compare(NewsObject o2,
+                                        NewsObject o1)
+                     {
+                         if (o1.getWeeklyViews()==
+                                 o2.getWeeklyViews())
+                         {
+                             return 0;
+                         }
+                         else if (o1.getWeeklyViews() <
+                                      o2.getWeeklyViews())
+                         {
+                             return -1;
+                         }
+                         return 1;
+                     }
+                 });
+        model.addAttribute("news", news);
+        model.addAttribute("categories", catRepo.findAll());
         return "news";
     }
     
     @Transactional
     @GetMapping("/news/{id}")
-    public String manage(Model model, @PathVariable Long id){
+    public String newByid(Model model, @PathVariable Long id){
         NewsObject n = newRepo.getOne(id);
         n.view();
         newRepo.save(n);

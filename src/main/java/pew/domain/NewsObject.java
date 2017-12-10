@@ -40,7 +40,7 @@ public class NewsObject extends AbstractPersistable<Long>{
     private Long size;
     
     private String text;
-    private LocalDateTime releaseDate;
+    private LocalDateTime date;
     
     @ManyToMany
     private List<Author> authors;
@@ -55,7 +55,7 @@ public class NewsObject extends AbstractPersistable<Long>{
     private Map<String, Long> views;
     
     public NewsObject() {
-        this.releaseDate = LocalDateTime.now();
+        this.date = LocalDateTime.now();
         views = new HashMap<String, Long>();
     }
     
@@ -79,7 +79,7 @@ public class NewsObject extends AbstractPersistable<Long>{
     }
     
     @Transactional
-    public Long getViewsFromWeek(){
+    public Long getWeeklyViews(){
         if(this.views.isEmpty()) return 0L;
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         LocalDate today = LocalDate.now();
