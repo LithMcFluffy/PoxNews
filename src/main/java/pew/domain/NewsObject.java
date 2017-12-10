@@ -45,7 +45,7 @@ public class NewsObject extends AbstractPersistable<Long>{
     @ManyToMany
     private List<Author> authors;
     
-    @ManyToMany
+    @ManyToMany(mappedBy = "news")
     private List<Category> categories;
     
     @ElementCollection

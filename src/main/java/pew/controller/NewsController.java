@@ -49,13 +49,14 @@ public class NewsController {
     @GetMapping("/news/recent")
     public String sortByReleaseDate(Model model){
         model.addAttribute("news", newRepo.findAllByOrderByDateDesc());
+        model.addAttribute("categories", catRepo.findAll());
         return "news";
     }
     
     @Transactional
     @GetMapping("/news/category/{name}")
     public String listByCategory(Model model, @PathVariable String name){
-        Category cat = catRepo.findByName(name);
+        /*Category cat = catRepo.findByName(name);
         List<NewsObject> news = new ArrayList<>();
         for(NewsObject n : newRepo.findAll()){
             if(n.getCategories().contains(cat)){
@@ -64,12 +65,12 @@ public class NewsController {
         }
         model.addAttribute("news", cat.getNews());
         model.addAttribute("categories", catRepo.findAll());
+        */
         
-        /*
         Category cat = catRepo.findByName(name);
         model.addAttribute("news", cat.getNews());
         model.addAttribute("categories", catRepo.findAll());
-        */
+        
         return "news";
     }
     
@@ -108,6 +109,7 @@ public class NewsController {
         n.view();
         newRepo.save(n);
         model.addAttribute("newsObject", n);
+        model.addAttribute("categories", catRepo.findAll());
         return "new";
     }
     

@@ -5,6 +5,18 @@
         <title th:text="${newsObject.title}">title</title>
     </head>
     <body>
+        
+        <h2>Categories:</h2>
+        <ol>
+            <li th:each="category : ${categories}">
+                <span><a th:href="@{'/news/category/' + ${category.name} + '?'}" th:text="${category.name}">title</a></span><br/>
+            </li>
+        </ol>
+        
+        <h2><a href="/news/popular"> Sort by popularity </a></h2>
+        <h2><a href="/news/recent"> Sort by release date </a></h2>
+        
+        
         <h1 th:text="${newsObject.title}">title</h1>
 
         <span th:text="${newsObject.title}">title</span><br/>
