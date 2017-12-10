@@ -22,7 +22,6 @@ import pew.domain.NewsObject;
 import pew.repository.AuthorRepository;
 import pew.repository.CategoryRepository;
 import pew.repository.NewRepository;
-import pew.util.LocalDateTimeAttributeConverter;
 
 @Controller
 public class NewsController {
@@ -35,9 +34,6 @@ public class NewsController {
     
     @Autowired
     private NewRepository newRepo;
-    
-    @Autowired
-    private LocalDateTimeAttributeConverter timeConverter;
     
     @Transactional
     @GetMapping("/news")

@@ -38,7 +38,6 @@ public class NewsObjectController {
             n.setContentType(file.getContentType());
             n.setSize(file.getSize());
             n.setText(text);
-            n.setDate(LocalDateTime.now());
             newRepo.save(n);
         }
         return "redirect:/management";
