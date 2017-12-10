@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>PoxNews</title>
+    </head>
+    <body>
+        <h2>News: </h2>
+        
+        <ol>
+            <li th:each="newsObject : ${news}">
+                <span><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title}">title</a></span><br/>
+                <span th:text="${newsObject.ingress}">ingress</span><br/>
+                <span><img th:src="@{/news/{id}/image(id=${newsObject.id})}"/></span><br/>
+            </li>
+        </ol>
+        <div><a href="/">menu</a></div>
+    </body>
+</html>

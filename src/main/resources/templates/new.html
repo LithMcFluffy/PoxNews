@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title th:text="${newsObject.title}">title</title>
+    </head>
+    <body>
+        <h1 th:text="${newsObject.title}">title</h1>
+
+        <span th:text="${newsObject.title}">title</span><br/>
+        <span th:text="${newsObject.ingress}">ingress</span><br/>
+        <span><img th:src="@{/management/{id}/image(id=${newsObject.id})}"/></span><br/>
+        <span th:text="${newsObject.text}">text</span><br/>
+        <span th:text="${newsObject.releaseDate}">date</span><br/>
+        
+        <span>Authors:</span>
+        <ul>
+            <li th:each="author : ${newsObject.authors}" th:text="${author.name}">jcvd?</li>
+        </ul>
+
+        <span>Categories:</span>
+        <ul>
+            <li th:each="category : ${newsObject.categories}" th:text="${category.name}">jcvd?</li>
+        </ul>
+        
+        <span>Views:</span>
+        <span th:text="${newsObject.views}">views</span><br/>
+        
+        <span>WeeklyViews:</span>
+        <span th:text="${newsObject.viewsFromWeek}">views</span><br/>
+
+        <div><a href="/news">previous</a></div>
+    </body>
+</html>
