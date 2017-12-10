@@ -1,6 +1,7 @@
 
 package pew.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -55,8 +56,20 @@ public class NewsController {
     @GetMapping("/news/category/{name}")
     public String listByCategory(Model model, @PathVariable String name){
         Category cat = catRepo.findByName(name);
+        List<NewsObject> news = new ArrayList<>();
+        for(NewsObject n : newRepo.findAll()){
+            if(n.getCategories().contains(cat)){
+                news.add(n);
+            }
+        }
         model.addAttribute("news", cat.getNews());
         model.addAttribute("categories", catRepo.findAll());
+        
+        /*
+        Category cat = catRepo.findByName(name);
+        model.addAttribute("news", cat.getNews());
+        model.addAttribute("categories", catRepo.findAll());
+        */
         return "news";
     }
     
