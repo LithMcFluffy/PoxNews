@@ -56,7 +56,7 @@ public class NewsController {
     @Transactional
     @GetMapping("/news/category/{name}")
     public String listByCategory(Model model, @PathVariable String name){
-        /*Category cat = catRepo.findByName(name);
+        Category cat = catRepo.findByName(name);
         List<NewsObject> news = new ArrayList<>();
         for(NewsObject n : newRepo.findAll()){
             if(n.getCategories().contains(cat)){
@@ -65,12 +65,12 @@ public class NewsController {
         }
         model.addAttribute("news", cat.getNews());
         model.addAttribute("categories", catRepo.findAll());
-        */
         
+        /*
         Category cat = catRepo.findByName(name);
         model.addAttribute("news", cat.getNews());
         model.addAttribute("categories", catRepo.findAll());
-        
+        */
         return "news";
     }
     
