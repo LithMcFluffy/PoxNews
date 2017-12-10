@@ -7,4 +7,5 @@ import pew.domain.NewsObject;
 
 public interface NewRepository extends JpaRepository<NewsObject, Long>{
     List<NewsObject> findAllByOrderByDateDesc();
+    
 }

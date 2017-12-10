@@ -25,7 +25,12 @@
                 <form th:action="@{/category/{categoryId}(categoryId=${category.id})}" th:method="DELETE">
                     <input type="submit" value="Remove"/>
                 </form><br/>
+                <span>News:</span>
+                <ul>
+                    <li th:each="newsObject : ${category.news}" th:text="${newsObject.title}">jcvd?</li>
+                </ul>
             </li>
+            
         </ol>
 
         <div><a href="/management">management</a></div>
