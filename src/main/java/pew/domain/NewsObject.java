@@ -59,6 +59,10 @@ public class NewsObject extends AbstractPersistable<Long>{
         views = new HashMap<String, Long>();
     }
     
+    public void setDate() {
+        this.date = LocalDateTime.now();
+    }
+    
     @Transactional
     public void view(){
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");

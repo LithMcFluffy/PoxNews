@@ -2,6 +2,7 @@
 package pew.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +38,7 @@ public class NewsObjectController {
             n.setContentType(file.getContentType());
             n.setSize(file.getSize());
             n.setText(text);
+            n.setDate(LocalDateTime.now());
             newRepo.save(n);
         }
         return "redirect:/management";
