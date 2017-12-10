@@ -44,8 +44,9 @@ public class NewsController {
     @GetMapping("/news/{id}")
     public String manage(Model model, @PathVariable Long id){
         NewsObject n = newRepo.getOne(id);
-        model.addAttribute("newsObject", n);
         n.view();
+        newRepo.save(n);
+        model.addAttribute("newsObject", n);
         return "new";
     }
     

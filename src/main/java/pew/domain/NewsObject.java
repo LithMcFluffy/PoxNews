@@ -59,6 +59,7 @@ public class NewsObject extends AbstractPersistable<Long>{
         views = new HashMap<String, Long>();
     }
     
+    @Transactional
     public void view(){
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date date = new Date();
@@ -70,12 +71,14 @@ public class NewsObject extends AbstractPersistable<Long>{
         }
     }
     
+    @Transactional
     public Long getViews(){
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
         Date date = new Date();
         return views.get(dateFormat.format(date));
     }
     
+    @Transactional
     public Long getViewsFromWeek(){
         if(this.views.isEmpty()) return 0L;
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
