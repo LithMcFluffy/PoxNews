@@ -1,11 +1,9 @@
 
 package pew.controller;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -19,12 +17,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import pew.domain.Author;
 import pew.domain.Category;
 import pew.domain.NewsObject;
 import pew.repository.AuthorRepository;
 import pew.repository.CategoryRepository;
 import pew.repository.NewRepository;
+import pew.service.NewsService;
 
 @Controller
 public class NewsController {
@@ -38,6 +36,9 @@ public class NewsController {
     @Autowired
     private NewRepository newRepo;
     
+    @Autowired 
+    private NewsService nserv;
+    
     @Transactional
     @GetMapping("/news")
     public String home(Model model){
@@ -45,141 +46,41 @@ public class NewsController {
         model.addAttribute("news", newRepo.findAll(pa));
         model.addAttribute("recentNews", newRepo.findAll(pa));
         model.addAttribute("categories", catRepo.findByActive(1));
-        
-        List<NewsObject> news = newRepo.findAll();
-        Collections.sort(news,
-                 new Comparator<NewsObject>()
-                 {
-                     public int compare(NewsObject o2,
-                                        NewsObject o1)
-                     {
-                         if (o1.getWeeklyViews()==
-                                 o2.getWeeklyViews())
-                         {
-                             return 0;
-                         }
-                         else if (o1.getWeeklyViews() <
-                                      o2.getWeeklyViews())
-                         {
-                             return -1;
-                         }
-                         return 1;
-                     }
-                 });
-        if(news.size() > 5){
-            model.addAttribute("popularNews", news.subList(0, 5));
-        }else{
-            model.addAttribute("popularNews", news);
-        }
+        model.addAttribute("popularNews", nserv.getPopularNews());
         return "news";
     }
     
     @Transactional
     @GetMapping("/news/recent")
     public String listByReleaseDate(Model model){
-        model.addAttribute("news", newRepo.findAllByOrderByDateDesc());
         Pageable pa = PageRequest.of(0, 5, Sort.Direction.DESC, "date");
+        model.addAttribute("news", newRepo.findAllByOrderByDateDesc());
         model.addAttribute("recentNews", newRepo.findAll(pa));
         model.addAttribute("categories", catRepo.findByActive(1));
-        
-        List<NewsObject> news = newRepo.findAll();
-        Collections.sort(news,
-                 new Comparator<NewsObject>()
-                 {
-                     public int compare(NewsObject o2,
-                                        NewsObject o1)
-                     {
-                         if (o1.getWeeklyViews()==
-                                 o2.getWeeklyViews())
-                         {
-                             return 0;
-                         }
-                         else if (o1.getWeeklyViews() <
-                                      o2.getWeeklyViews())
-                         {
-                             return -1;
-                         }
-                         return 1;
-                     }
-                 });
-        if(news.size() > 5){
-            model.addAttribute("popularNews", news.subList(0, 5));
-        }else{
-            model.addAttribute("popularNews", news);
-        }
+        model.addAttribute("popularNews", nserv.getPopularNews());
         return "news";
     }
     
     @Transactional
     @GetMapping("/news/category/{name}")
     public String listByCategory(Model model, @PathVariable String name){
+        Pageable pa = PageRequest.of(0, 5, Sort.Direction.DESC, "date");
         Category cat = catRepo.findByName(name);
         model.addAttribute("news", cat.getNews());
-        Pageable pa = PageRequest.of(0, 5, Sort.Direction.DESC, "date");
         model.addAttribute("recentNews", newRepo.findAll(pa));
         model.addAttribute("categories", catRepo.findByActive(1));
-        
-        List<NewsObject> news = newRepo.findAll();
-        Collections.sort(news,
-                 new Comparator<NewsObject>()
-                 {
-                     public int compare(NewsObject o2,
-                                        NewsObject o1)
-                     {
-                         if (o1.getWeeklyViews()==
-                                 o2.getWeeklyViews())
-                         {
-                             return 0;
-                         }
-                         else if (o1.getWeeklyViews() <
-                                      o2.getWeeklyViews())
-                         {
-                             return -1;
-                         }
-                         return 1;
-                     }
-                 });
-        if(news.size() > 5){
-            model.addAttribute("popularNews", news.subList(0, 5));
-        }else{
-            model.addAttribute("popularNews", news);
-        }
+        model.addAttribute("popularNews", nserv.getPopularNews());
         return "news";
     }
     
     @Transactional
     @GetMapping("/news/popular")
     public String listByPopularity(Model model){
-        List<NewsObject> news = newRepo.findAll();
-        Collections.sort(news,
-                 new Comparator<NewsObject>()
-                 {
-                     public int compare(NewsObject o2,
-                                        NewsObject o1)
-                     {
-                         if (o1.getWeeklyViews()==
-                                 o2.getWeeklyViews())
-                         {
-                             return 0;
-                         }
-                         else if (o1.getWeeklyViews() <
-                                      o2.getWeeklyViews())
-                         {
-                             return -1;
-                         }
-                         return 1;
-                     }
-                 });
-        model.addAttribute("news", news);
-        
         Pageable pa = PageRequest.of(0, 5, Sort.Direction.DESC, "date");
+        model.addAttribute("news", nserv.getAllPopularNews());
         model.addAttribute("recentNews", newRepo.findAll(pa));
         model.addAttribute("categories", catRepo.findByActive(1));
-        if(news.size() > 5){
-            model.addAttribute("popularNews", news.subList(0, 5));
-        }else{
-            model.addAttribute("popularNews", news);
-        }
+        model.addAttribute("popularNews", nserv.getPopularNews());
         return "news";
     }
     
@@ -193,32 +94,7 @@ public class NewsController {
         Pageable pa = PageRequest.of(0, 5, Sort.Direction.DESC, "date");
         model.addAttribute("recentNews", newRepo.findAll(pa));
         model.addAttribute("categories", catRepo.findByActive(1));
-        
-        List<NewsObject> news = newRepo.findAll();
-        Collections.sort(news,
-                 new Comparator<NewsObject>()
-                 {
-                     public int compare(NewsObject o2,
-                                        NewsObject o1)
-                     {
-                         if (o1.getWeeklyViews()==
-                                 o2.getWeeklyViews())
-                         {
-                             return 0;
-                         }
-                         else if (o1.getWeeklyViews() <
-                                      o2.getWeeklyViews())
-                         {
-                             return -1;
-                         }
-                         return 1;
-                     }
-                 });
-        if(news.size() > 5){
-            model.addAttribute("popularNews", news.subList(0, 5));
-        }else{
-            model.addAttribute("popularNews", news);
-        }
+        model.addAttribute("popularNews", nserv.getPopularNews());
         return "new";
     }
     
@@ -226,10 +102,6 @@ public class NewsController {
     @GetMapping("/news/{id}/image")
     public ResponseEntity<byte[]> getImage(@PathVariable Long id){
         NewsObject n = newRepo.getOne(id);
-        final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.parseMediaType(n.getContentType()));
-        headers.setContentLength(n.getSize());
-        
-        return new ResponseEntity<>(n.getImage(), headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(n.getImage(), nserv.getHeaders(n), HttpStatus.CREATED);
     }
 }

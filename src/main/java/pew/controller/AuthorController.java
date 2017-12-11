@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import pew.domain.Author;
-import pew.domain.Category;
 import pew.domain.NewsObject;
 import pew.repository.AuthorRepository;
 import pew.repository.NewRepository;
+import pew.service.ManagementService;
 
 @Controller
 public class AuthorController {
@@ -25,6 +25,9 @@ public class AuthorController {
     @Autowired
     private NewRepository newRepo;
     
+    @Autowired
+    private ManagementService mserv;
+    
     @GetMapping("/author")
     public String home(Model model){
         model.addAttribute("authors", autoRepo.findAll());
@@ -32,25 +35,18 @@ public class AuthorController {
     }
     
     @PostMapping("/author")
-    public String addCategory(@RequestParam String name){
+    public String addAuthor(@RequestParam String name){
         if(name.trim().isEmpty() || autoRepo.findByName(name) != null){
             return "redirect:/author";
         }
-        Author auto = new Author();
-        auto.setName(name);
-        autoRepo.save(auto);
+        mserv.createAuthor(name);
         return "redirect:/author";
     }
     
     @Transactional
     @DeleteMapping("/author/{authorId}")
-    public String deleteCategory(@PathVariable Long authorId){
-        Author auto = autoRepo.getOne(authorId);
-        for(NewsObject n : auto.getNews()){
-            n.getAuthors().remove(auto);
-            newRepo.save(n);
-        }
-        autoRepo.deleteById(authorId);
+    public String deleteAuthor(@PathVariable Long authorId){
+        mserv.deleteAuthor(authorId);
         return "redirect:/author";
     }
 }

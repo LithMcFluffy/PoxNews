@@ -14,6 +14,7 @@ import pew.domain.Category;
 import pew.domain.NewsObject;
 import pew.repository.CategoryRepository;
 import pew.repository.NewRepository;
+import pew.service.ManagementService;
 
 @Controller
 public class CategoryController {
@@ -23,6 +24,9 @@ public class CategoryController {
     
     @Autowired
     private NewRepository newRepo;
+    
+    @Autowired
+    private ManagementService mserv;
     
     @GetMapping("/category")
     public String home(Model model){
@@ -35,22 +39,14 @@ public class CategoryController {
         if(name.trim().isEmpty() || catRepo.findByName(name) != null){
             return "redirect:/category";
         }
-        Category cat = new Category();
-        cat.setName(name);
-        cat.setActive(active);
-        catRepo.save(cat);
+        mserv.createCategory(name, active);
         return "redirect:/category";
     }
     
     @Transactional
     @DeleteMapping("/category/{categoryId}")
     public String deleteCategory(@PathVariable Long categoryId){
-        Category cat = catRepo.getOne(categoryId);
-        for(NewsObject n : cat.getNews()){
-            n.getCategories().remove(cat);
-            newRepo.save(n);
-        }
-        catRepo.deleteById(categoryId);
+        mserv.deleteCategory(categoryId);
         return "redirect:/category";
     }
 }
