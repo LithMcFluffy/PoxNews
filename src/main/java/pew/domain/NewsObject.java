@@ -40,6 +40,7 @@ public class NewsObject extends AbstractPersistable<Long>{
     private Long size;
     
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private String text;
     
     private Date date;
