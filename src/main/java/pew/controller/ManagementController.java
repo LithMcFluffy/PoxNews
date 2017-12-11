@@ -34,6 +34,7 @@ public class ManagementController {
     @Autowired
     private NewRepository newRepo;
     
+    @Transactional
     @GetMapping("/management")
     public String home(Model model){
         model.addAttribute("news", newRepo.findAll());
