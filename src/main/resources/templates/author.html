@@ -7,13 +7,13 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     </head>
-    <body style="margin-left: 10px">
+    <body class="container">
         <h1>PoxNews Management - Author</h1>
 
-        <h2>Add new Author</h2>
+        <h3 style="font-weight: bold">Add new Author</h3>
 
         <div style="padding-left: 10px">
-            Enter name and press Submit:<br/>
+            <h3>Enter name and press Submit:</h3>
             <form action="/author" method="POST">
                 Name: <input class="form-group" type="text" name="name" id="name"/><br/>
                 <input class="form-group" type="submit"/>            
@@ -22,12 +22,16 @@
 
         <h2>Current authors</h2>
 
-        <ol style="padding-left: 10px">
+        <ol style="padding-left: 10px; list-style-type:none">
             <li th:each="author : ${authors}">
-                <span th:text="${author.name}">name</span>
-                <form th:action="@{/author/{authorId}(authorId=${author.id})}" th:method="DELETE">
-                    <input class="form-group" type="submit" value="Remove"/>
-                </form><br/>
+                <div class="row">
+                    <div  class="col-md-2" th:text="${author.name}">name</div>
+                    <div  class="col-md-1">
+                        <form th:action="@{/author/{authorId}(authorId=${author.id})}" th:method="DELETE">
+                            <input class="form-group" type="submit" value="Remove"/>
+                        </form>
+                    </div>
+                </div>
             </li>
         </ol>
 

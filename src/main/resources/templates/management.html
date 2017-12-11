@@ -7,37 +7,38 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     </head>
-    <body>
+    <body class="container">
         <h1>PoxNews Management</h1>
-        
-        <div><a href="/newsobject">Add a new</a></div>
-        <div><a href="/author">Add/Remove an author</a></div>
-        <div><a href="/category">Add/Remove a category</a></div>
+        <ul class="table" style="list-style-type:none">
+            <li><a href="/newsobject">Add a new</a></li>
+            <li><a href="/category">Add/Remove a category</a></li>
+            <li><a href="/author">Add/Remove an author</a></li>
+        </ul>
 
         <h2>News: </h2>
-        
-        <ol>
-            <li th:each="newsObject : ${news}">
+
+        <tr class="table">
+            <td th:each="newsObject : ${news}">
                 <span th:text="${newsObject.title}">title</span><br/>
                 <span th:text="${newsObject.ingress}">ingress</span><br/>
-                <span><img th:src="@{/management/{id}/image(id=${newsObject.id})}"/></span><br/>
-                <span th:text="${newsObject.text}">text</span><br/>
                 <span th:text="${newsObject.date}">date</span><br/>
 
-                <span>Authors:</span>
-                <ul>
-                    <li th:each="author : ${newsObject.authors}" th:text="${author.name}">jcvd?</li>
-                </ul>
+                <br/>
+                <div class="row">
+                    <div class="col-md-2">Authors:</div>
+                    <div class="col-md-2" th:each="author : ${newsObject.authors}" th:text="${author.name}">jcvd?</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">Categories:</div>
+                    <div class="col-md-2" th:each="category : ${newsObject.categories}" th:text="${category.name}">jcvd?</div>
+                </div>
                 
-                <span>Categories:</span>
-                <ul>
-                    <li th:each="category : ${newsObject.categories}" th:text="${category.name}">jcvd?</li>
-                </ul>
+                <br/>
                 <form th:action="@{/management/{newsObjectId}(newsObjectId=${newsObject.id})}" th:method="GET">
-                    <input type="submit" value="Manage"/>
+                    <input class="form-group" type="submit" value="Manage"/>
                 </form><br/>
-            </li>
-        </ol>
+            </td>
+        </tr>
         <div><a href="/">menu</a></div>
     </body>
 </html>

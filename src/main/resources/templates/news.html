@@ -11,38 +11,38 @@
         <div style="float:top; width:100%;">
             <h1> PoxNewsin eeppinen uutisivusto \o/ </h1>
             <div class="row" style="width:100%";>
+                <div class="col-md-1"><a href="/news">home</a></div>
                 <div class="col-md-1" th:each="category : ${categories}"><a th:href="@{'/news/category/' + ${category.name} + '?'}" th:text="${category.name}">title</a></div>
             </div>
             <br/>
         </div>
-        <div style="float:left;">
+        <div style="float:left; max-width: 60%">
             <h2>News: </h2>
 
-            <tr class="table">
-                <td th:each="newsObject : ${news}">
-                    <span><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title}">title</a></span><br/>
-                    <span th:text="${newsObject.ingress}">ingress</span><br/>
+            <ul class="table" style="list-style-type:none">
+                <li th:each="newsObject : ${news}" style="margin-bottom: 30px;">
+                    <h2><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title}">title</a></h2>
+                    <h3 th:text="${newsObject.ingress}">ingress</h3>
                     <span><img th:src="@{/news/{id}/image(id=${newsObject.id})}"/></span><br/>
-                </td>
-            </tr>
+                </li>
+            </ul>
             
             <div><a href="/">menu</a></div>
         </div>
 
-        <div style="float:right;">
-            <tr class="table">
-                <td><a href="/news/recent">Recent stories</a></td>
-                <td th:each="newsObject : ${recentNews}">
+        <div style="float:right; max-width: 40%; padding-right: 20px; padding-top: 15px; border-color: black; border-style: ridge">
+            <ul class="table">
+                <li style="list-style-type:none"><a href="/news/recent">Recent stories</a></li>
+                <li th:each="newsObject : ${recentNews}">
                     <div><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title} +' '+ ${newsObject.date}">title</a></div>
-                </td>
-            </tr>
-            <br/>
-            <tr class="table">
-                <td><a href="/news/popular">Popular stories</a></td>
-                <td th:each="newsObject : ${popularNews}">
+                </li>
+            </ul>
+            <ul class="table">
+                <li style="list-style-type:none"><a href="/news/popular">Popular stories</a></li>
+                <li th:each="newsObject : ${popularNews}">
                     <div><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title} +' '+ ${newsObject.date}">title</a></div>
-                </td>
-            </tr>
+                </li>
+            </ul>
         </div>
         
     </body>

@@ -97,6 +97,30 @@ public class ManagementController {
     }
     
     @Transactional
+    @PostMapping("/management/{newId}/category/{categoryId}")
+    public String removeCategory(@PathVariable Long newId, @PathVariable Long categoryId){
+        NewsObject n = newRepo.getOne(newId);
+        Category c = catRepo.getOne(categoryId);
+        n.getCategories().remove(c);
+        c.getNews().remove(n);
+        newRepo.save(n);
+        catRepo.save(c);
+        return "redirect:/management/"+newId;
+    }
+    
+    @Transactional
+    @PostMapping("/management/{newId}/author/{authorId}")
+    public String removeAuthor(@PathVariable Long newId, @PathVariable Long authorId){
+        NewsObject n = newRepo.getOne(newId);
+        Author a = autoRepo.getOne(authorId);
+        n.getAuthors().remove(a);
+        a.getNews().remove(n);
+        newRepo.save(n);
+        autoRepo.save(a);
+        return "redirect:/management/"+newId;
+    }
+    
+    @Transactional
     @DeleteMapping("/management/{id}")
     public String del(@PathVariable Long id){
         NewsObject n = newRepo.getOne(id);

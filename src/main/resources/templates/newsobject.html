@@ -7,13 +7,13 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     </head>
-    <body style="margin-left: 10px">
+    <body class="container">
         <h1>PoxNews Management - News</h1>
 
-        <h2>Add a new</h2>
+        <h3 style="font-weight: bold">Add a new</h3>
 
         <div style="padding-left: 10px">
-            Enter title, ingress, image and text and press Submit:<br/>
+            <h3>Enter title, ingress, image and text and press Submit:</h3>
             <form action="/newsobject" method="POST" enctype="multipart/form-data">
                 Title: <input class="form-group" type="text" name="title" id="title"/><br/>
                 Ingress: <input class="form-group" type="text" name="ingress" id="ingress"/><br/>

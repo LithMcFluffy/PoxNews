@@ -7,33 +7,37 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     </head>
-    <body style="margin-left: 10px">
+    <body class="container">
         <h1>PoxNews Management - Category</h1>
 
-        <h2>Add new Category</h2>
+        <h3 style="font-weight: bold">Add new Category</h3>
 
         <div style="padding-left: 10px">
-            Enter name and press Submit:<br/>
+            <h3>Enter name and press Submit:</h3>
             <form action="/category" method="POST">
                 Name: <input class="form-group" type="text" name="name" id="name"/><br/>
-                <select class="form-group" name="active">
+                Show on news page? <select class="form-group" name="active">
                     <option value="1">Yes</option>
                     <option value="0">No</option>
-                </select>
+                </select><br/>
                 <input class="form-group" type="submit"/>            
             </form>
         </div>
 
         <h2>Current categories</h2>
 
-        <ol style="padding-left: 10px">
+        <ol style="padding-left: 10px; list-style-type:none">
             <li th:each="category : ${categories}">
-                <span th:text="${category.name}">name</span>
-                <form th:action="@{/category/{categoryId}(categoryId=${category.id})}" th:method="DELETE">
-                    <input class="form-group" type="submit" value="Remove"/>
-                </form><br/>
+                <div class="row">
+                    <div  class="col-md-2" th:text="${category.name}">name</div>
+                    <div  class="col-md-1">
+                        <form th:action="@{/category/{categoryId}(categoryId=${category.id})}" th:method="DELETE">
+                            <input class="form-group" type="submit" value="Remove"/>
+                        </form>
+                    </div>
+                </div>
             </li>
-            
+
         </ol>
 
         <div><a href="/management">management</a></div>

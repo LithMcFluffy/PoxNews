@@ -12,6 +12,7 @@
         <div style="float:top; width:100%;">
             <h1> PoxNewsin eeppinen uutisivusto \o/ </h1>
             <div class="row" style="width:100%";>
+                <div class="col-md-1"><a href="/news">home</a></div>
                 <div class="col-md-1" th:each="category : ${categories}"><a th:href="@{'/news/category/' + ${category.name} + '?'}" th:text="${category.name}">title</a></div>
             </div>
             <br/>
@@ -44,20 +45,19 @@
             <div><a href="/news">Front Page</a></div>
         </div>
         
-        <div style="float:right;">
-            <tr class="table">
-                <td><a href="/news/recent">Recent stories</a></td>
-                <td th:each="newsObject : ${recentNews}">
+        <div style="float:right; max-width: 40%; padding-right: 20px; padding-top: 15px; border-color: black; border-style: ridge">
+            <ul class="table">
+                <li style="list-style-type:none"><a href="/news/recent">Recent stories</a></li>
+                <li th:each="newsObject : ${recentNews}">
                     <div><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title} +' '+ ${newsObject.date}">title</a></div>
-                </td>
-            </tr>
-            <br/>
-            <tr class="table">
-                <td><a href="/news/popular">Popular stories</a></td>
-                <td th:each="newsObject : ${popularNews}">
+                </li>
+            </ul>
+            <ul class="table">
+                <li style="list-style-type:none"><a href="/news/popular">Popular stories</a></li>
+                <li th:each="newsObject : ${popularNews}">
                     <div><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title} +' '+ ${newsObject.date}">title</a></div>
-                </td>
-            </tr>
+                </li>
+            </ul>
         </div>
     </body>
 </html>

@@ -7,47 +7,67 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     </head>
-    <body>
+    <body class="container">
         <h1>PoxNews Management - News</h1>
 
-        <span th:text="${newsObject.title}">title</span><br/>
-        <span th:text="${newsObject.ingress}">ingress</span><br/>
+        <h2 th:text="${newsObject.title}">title</h2>
+        <h3 th:text="${newsObject.ingress}">ingress</h3>
         <span><img th:src="@{/management/{id}/image(id=${newsObject.id})}"/></span><br/>
-        <span th:text="${newsObject.text}">text</span><br/>
+        <h4 th:text="${newsObject.text}">text</h4>
         <span th:text="${newsObject.date}">date</span><br/>
-        <form th:action="@{/management/{newsObjectId}(newsObjectId=${newsObject.id})}" th:method="DELETE">
-            <input type="submit" value="Remove"/>
-        </form><br/>
         
-        <span>Authors:</span>
+        <h3>Authors:</h3>
+        <ul style="list-style-type:none">
+            <li th:each="author : ${newsObject.authors}">
+                <div class="row">
+                    <div  class="col-md-2" th:text="${author.name}">name</div>
+                    <div  class="col-md-1">
+                        <form th:action="@{/management/{newId}/author/{authorId}(newId=${newsObject.id}, authorId=${author.id})}" th:method="POST">
+                            <input class="form-group" type="submit" value="Remove"/>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        </ul>
         <div>
-            <h2>Assign to author</h2>
+            <h4>Assign to author</h4>
 
-            <form method="POST" th:action="@{/management/{newId}/author(newId=${newsObject.id})}">
+            <form method="POST" th:action="@{ /management/{newId}/author ( newId=${newsObject.id} ) }">
                 <select name="authorId">
                     <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name}">author</option>
                 </select>
-                <input type="submit" value="Assign" id="add-to-movie"/>
+                <input class="form-group" type="submit" value="Assign" id="add-to-movie"/>
             </form>
         </div>
-        <ul>
-            <li th:each="author : ${newsObject.authors}" th:text="${author.name}">jcvd?</li>
-        </ul>
 
-        <span>Categories:</span>
+        <h3>Categories:</h3>
+        <ul style="list-style-type:none">
+            <li th:each="category : ${newsObject.categories}">
+                <div class="row">
+                    <div  class="col-md-2"  th:text="${category.name}">name</div>
+                    <div  class="col-md-1">
+                        <form th:action="@{/management/{newId}/category/{categoryId}(newId=${newsObject.id}, categoryId=${category.id})}" th:method="POST">
+                            <input class="form-group" type="submit" value="Remove"/>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        </ul>
         <div>
-            <h2>Assign to category</h2>
+            <h4>Assign to category</h4>
 
             <form method="POST" th:action="@{/management/{newId}/category(newId=${newsObject.id})}">
                 <select name="categoryId">
                     <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">category</option>
                 </select>
-                <input type="submit" value="Assign" id="add-to-movie"/>
+                <input class="form-group" type="submit" value="Assign" id="add-to-movie"/>
             </form>
         </div>
-        <ul>
-            <li th:each="category : ${newsObject.categories}" th:text="${category.name}">jcvd?</li>
-        </ul>
+        
+        <br/>
+        <form th:action="@{/management/{newsObjectId}(newsObjectId=${newsObject.id})}" th:method="DELETE">
+            <input class="form-group" type="submit" value="Delete new"/>
+        </form><br/>
 
         <div><a href="/management">management</a></div>
     </body>
