@@ -19,10 +19,17 @@
                 Ingress: <input class="form-group" type="text" name="ingress" id="ingress"/><br/>
                 Text: <input class="form-group" type="text" name="text" id="text"/><br/>
                 <input class="form-group" type="file" name="file" id="file"/>
-                <input class="form-group" type="submit"/>            
+                <div class="row">
+                    <div class="col-md-1">
+                        <form action="/management" method="GET">
+                            <input class="form-group" type="submit" value="Back"/>
+                        </form>
+                    </div>
+                    <div class="col-md-1">
+                        <input class="form-group" type="submit"/>    
+                    </div>
+                </div>
             </form>
         </div>
-
-        <div><a href="/management">management</a></div>
     </body>
 </html>

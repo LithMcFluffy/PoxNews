@@ -65,10 +65,18 @@
         </div>
         
         <br/>
-        <form th:action="@{/management/{newsObjectId}(newsObjectId=${newsObject.id})}" th:method="DELETE">
-            <input class="form-group" type="submit" value="Delete new"/>
-        </form><br/>
-
-        <div><a href="/management">management</a></div>
+        <br/>
+        <div class="row">
+            <div class="col-md-2">
+                <form action="/management" method="GET">
+                    <input class="form-group" type="submit" value="Back"/>
+                </form>
+            </div>
+            <div class="col-md-1">
+                <form th:action="@{/management/{newsObjectId}(newsObjectId=${newsObject.id})}" th:method="DELETE">
+                    <input class="form-group" type="submit" value="Delete new"/>
+                </form>
+            </div>
+        </div>
     </body>
 </html>

@@ -26,23 +26,25 @@
                     <span><img th:src="@{/news/{id}/image(id=${newsObject.id})}"/></span><br/>
                 </li>
             </ul>
-            
-            <div><a href="/">menu</a></div>
         </div>
 
-        <div style="float:right; max-width: 40%; padding-right: 20px; padding-top: 15px; border-color: black; border-style: ridge">
-            <ul class="table">
-                <li style="list-style-type:none"><a href="/news/recent">Recent stories</a></li>
-                <li th:each="newsObject : ${recentNews}">
-                    <div><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title} +' '+ ${newsObject.date}">title</a></div>
-                </li>
-            </ul>
-            <ul class="table">
-                <li style="list-style-type:none"><a href="/news/popular">Popular stories</a></li>
-                <li th:each="newsObject : ${popularNews}">
-                    <div><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title} +' '+ ${newsObject.date}">title</a></div>
-                </li>
-            </ul>
+        <div style="float:right; max-width: 40%;">
+            <div style="width:100%; height: 20px"><a href="/management" style="float: right">manage news</a></div>
+            <div style="padding-right: 20px; margin-top: 15px; border-color: black; border-style: ridge">
+                <br/>
+                <ul class="table">
+                    <li style="list-style-type:none"><a href="/news/recent">Recent stories</a></li>
+                    <li th:each="newsObject : ${recentNews}">
+                        <div><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title} +' '+ ${newsObject.date}">title</a></div>
+                    </li>
+                </ul>
+                <ul class="table">
+                    <li style="list-style-type:none"><a href="/news/popular">Popular stories</a></li>
+                    <li th:each="newsObject : ${popularNews}">
+                        <div><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title} +' '+ ${newsObject.date}">title</a></div>
+                    </li>
+                </ul>
+            </div>
         </div>
         
     </body>
