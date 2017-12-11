@@ -31,12 +31,13 @@ public class CategoryController {
     }
     
     @PostMapping("/category")
-    public String addCategory(@RequestParam String name){
+    public String addCategory(@RequestParam String name, @RequestParam Integer active){
         if(name.trim().isEmpty() || catRepo.findByName(name) != null){
             return "redirect:/category";
         }
         Category cat = new Category();
         cat.setName(name);
+        cat.setActive(active);
         catRepo.save(cat);
         return "redirect:/category";
     }

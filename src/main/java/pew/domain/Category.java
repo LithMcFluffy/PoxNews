@@ -16,6 +16,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class Category extends AbstractPersistable<Long>{
     
     private String name;
+    private Integer active;
     
     @ManyToMany
     private List<NewsObject> news;

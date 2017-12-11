@@ -3,27 +3,47 @@
     <head>
         <meta charset="UTF-8" />
         <title>PoxNews</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     </head>
-    <body>
-        <h2>Categories:</h2>
-        <ol>
-            <li th:each="category : ${categories}">
-                <span><a th:href="@{'/news/category/' + ${category.name} + '?'}" th:text="${category.name}">title</a></span><br/>
-            </li>
-        </ol>
+    <body class="container">
+        <div style="float:top; width:100%;">
+            <h1> PoxNewsin eeppinen uutisivusto \o/ </h1>
+            <div class="row" style="width:100%";>
+                <div class="col-md-1" th:each="category : ${categories}"><a th:href="@{'/news/category/' + ${category.name} + '?'}" th:text="${category.name}">title</a></div>
+            </div>
+            <br/>
+        </div>
+        <div style="float:left;">
+            <h2>News: </h2>
+
+            <tr class="table">
+                <td th:each="newsObject : ${news}">
+                    <span><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title}">title</a></span><br/>
+                    <span th:text="${newsObject.ingress}">ingress</span><br/>
+                    <span><img th:src="@{/news/{id}/image(id=${newsObject.id})}"/></span><br/>
+                </td>
+            </tr>
+            
+            <div><a href="/">menu</a></div>
+        </div>
+
+        <div style="float:right;">
+            <tr class="table">
+                <td><a href="/news/recent">Recent stories</a></td>
+                <td th:each="newsObject : ${recentNews}">
+                    <div><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title} +' '+ ${newsObject.date}">title</a></div>
+                </td>
+            </tr>
+            <br/>
+            <tr class="table">
+                <td><a href="/news/popular">Popular stories</a></td>
+                <td th:each="newsObject : ${popularNews}">
+                    <div><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title} +' '+ ${newsObject.date}">title</a></div>
+                </td>
+            </tr>
+        </div>
         
-        <h2><a href="/news/popular"> Sort by popularity </a></h2>
-        <h2><a href="/news/recent"> Sort by release date </a></h2>
-        
-        <h2>News: </h2>
-        
-        <ol>
-            <li th:each="newsObject : ${news}">
-                <span><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title}">title</a></span><br/>
-                <span th:text="${newsObject.ingress}">ingress</span><br/>
-                <span><img th:src="@{/news/{id}/image(id=${newsObject.id})}"/></span><br/>
-            </li>
-        </ol>
-        <div><a href="/">menu</a></div>
     </body>
 </html>

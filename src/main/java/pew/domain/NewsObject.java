@@ -39,7 +39,9 @@ public class NewsObject extends AbstractPersistable<Long>{
     private String contentType;
     private Long size;
     
+    @Lob
     private String text;
+    
     private Date date;
     
     @ManyToMany

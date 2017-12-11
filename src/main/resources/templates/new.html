@@ -3,44 +3,61 @@
     <head>
         <meta charset="UTF-8" />
         <title th:text="${newsObject.title}">title</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css"/>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     </head>
-    <body>
+    <body class="container">
         
-        <h2>Categories:</h2>
-        <ol>
-            <li th:each="category : ${categories}">
-                <span><a th:href="@{'/news/category/' + ${category.name} + '?'}" th:text="${category.name}">title</a></span><br/>
-            </li>
-        </ol>
-        
-        <h2><a href="/news/popular"> Sort by popularity </a></h2>
-        <h2><a href="/news/recent"> Sort by release date </a></h2>
-        
-        
-        <h1 th:text="${newsObject.title}">title</h1>
+        <div style="float:top; width:100%;">
+            <h1> PoxNewsin eeppinen uutisivusto \o/ </h1>
+            <div class="row" style="width:100%";>
+                <div class="col-md-1" th:each="category : ${categories}"><a th:href="@{'/news/category/' + ${category.name} + '?'}" th:text="${category.name}">title</a></div>
+            </div>
+            <br/>
+        </div>
+        <div style="float:left; min-width: 40%; max-width: 60%">
+            <h2 th:text="${newsObject.title}">title</h2>
+            <h3 th:text="${newsObject.ingress}">ingress</h3>
+            <span><img th:src="@{/management/{id}/image(id=${newsObject.id})}"/></span><br/>
+            <h4 th:text="${newsObject.text}">text</h4>
+            <span th:text="${newsObject.date}">date</span><br/>
+            <br/>
+            <br/>
+            <div class="row">
+                <div class="col-md-2">Authors:</div>
+                <div class="col-md-2" th:each="author : ${newsObject.authors}" th:text="${author.name}">jcvd?</div>
+            </div><br/>
 
-        <span th:text="${newsObject.title}">title</span><br/>
-        <span th:text="${newsObject.ingress}">ingress</span><br/>
-        <span><img th:src="@{/management/{id}/image(id=${newsObject.id})}"/></span><br/>
-        <span th:text="${newsObject.text}">text</span><br/>
-        <span th:text="${newsObject.date}">date</span><br/>
+            <div class="row">
+                <div class="col-md-2">Categories:</div>
+                <div class="col-md-2" th:each="category : ${newsObject.categories}" th:text="${category.name}">jcvd?</div>
+            </div><br/>
         
-        <span>Authors:</span>
-        <ul>
-            <li th:each="author : ${newsObject.authors}" th:text="${author.name}">jcvd?</li>
-        </ul>
-
-        <span>Categories:</span>
-        <ul>
-            <li th:each="category : ${newsObject.categories}" th:text="${category.name}">jcvd?</li>
-        </ul>
+            <span>Views today:</span>
+            <span th:text="${newsObject.views}">views</span><br/>
         
-        <span>Views:</span>
-        <span th:text="${newsObject.views}">views</span><br/>
+            <span>Views last 7 days:</span>
+            <span th:text="${newsObject.weeklyViews}">views</span><br/>
+            
+            <br/>
+            <div><a href="/news">Front Page</a></div>
+        </div>
         
-        <span>WeeklyViews:</span>
-        <span th:text="${newsObject.weeklyViews}">views</span><br/>
-
-        <div><a href="/news">previous</a></div>
+        <div style="float:right;">
+            <tr class="table">
+                <td><a href="/news/recent">Recent stories</a></td>
+                <td th:each="newsObject : ${recentNews}">
+                    <div><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title} +' '+ ${newsObject.date}">title</a></div>
+                </td>
+            </tr>
+            <br/>
+            <tr class="table">
+                <td><a href="/news/popular">Popular stories</a></td>
+                <td th:each="newsObject : ${popularNews}">
+                    <div><a th:href="@{'/news/' + ${newsObject.id} + '?'}" th:text="${newsObject.title} +' '+ ${newsObject.date}">title</a></div>
+                </td>
+            </tr>
+        </div>
     </body>
 </html>
