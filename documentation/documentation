@@ -1,0 +1,54 @@
+PoxNews on uutissivusto, joka mahdollistaa uutisten, kirjoittajien ja kategorioiden 
+lisäämisen ja muutamia eri tapoja listata uutisia.
+
+Uutisilla on Otsikko, Ingressi, Kuva ja teksti.
+Kirjoittajilla on nimi.
+Kategorioilla on nimi ja totuusarvo lisätäänkö ne uutissivun yläpalkkiin vai ei.
+
+Uutiseen voi linkittää haluamansa määrän kirjailijoita ja kategorioita.
+
+Uutissivulla, uutisia voi listata kategorioiden, julkaisupäivän tai kävijämäärän mukaan.
+
+Käyttöohje:
+	Mene sivulle https://poxnews.herokuapp.com/news ja valitse oikeasta yläkulmasta "manage news"
+	Paina "add a new" lisätäksesi uutisartikkelin
+		Uutisartikkelille tarvitsee antaa:
+			-Otsikko
+			-Ingressi
+			-Teksti
+			-Kuva
+	Paina "add a category" lisätäksesi kategorian
+		Kategorialle tarvitsee antaa:
+			-nimi
+			-Kyllä/Ei listataan kategoria yläpalkissa
+	Paina "add an author" lisätäksesi kirjailijan
+		Kirjailijalle tarvitsee antaa:
+			-nimi
+	PoxNews Management sivulle listaantuu kaikki uutiset uusimmasta vanhimpaan.
+	Paina haluamasi uutisen alla olevaa "Manage" nappia muokataksesi uutista.
+		Voit lisätä tai poistaa Kirjoittajia uutiseen otsikon "Authors:" alla.
+		Lisätäksesi Kirjailijan uutiseen, valitse haluamasi kirjailija listasta ja paina "Assign" nappia.
+		Poistaaksesi Kirjailijan uutisesta, paina haluamasi kirjailijan vieressä olevaa "Remove" nappia.
+		
+		Voit lisätä tai poistaa Kategorian uutiseen otsikon "Categories:" alla.
+		Lisätäksesi Kategorian uutiseen, valitse haluamasi Kategoria listasta ja paina "Assign" nappia.
+		Poistaaksesi Kategorian uutisesta, paina haluamasi Kategorian vieressä olevaa "Remove" nappia.
+		
+		Voit poistaa uutisartikkelin painamalla sivun alalaidassa olevaa "Delete new" nappia.
+	PoxNews Management sivulla voit painaa "Back to news page" linkkiä, jolla pääset takaisin uutissivuston etusivulle.
+	Sivun ylälaidasta voit listata uutisia kategorian mukaan.
+	Sivun oikeasta laidasta voit valita uutisia 5 uusimmasta tai 5 suosituimmasta artikkelista.
+	Sivun oikeasta laidasta voit myös listata uutisia artikkelin tuoreuden tai kävijämäärän mukaan.
+	Klikkaamalla uutisotsikkoa, pääset lukemaan koko uutisartikkelin.
+		Artikkelin lisäksi uutissivulla ilmoitetaan artikkelin kävijämäärät, kirjoittajat ja kategoriat.
+		
+		
+Puuttuvat ominaisuudet:
+	Uutisten sisältöä ei voi muokata jälkikäteen.
+	Kirjoittajien nimiä ei voi muokata jälkikäteen.
+	Kategorioiden nimiä tai esille laiton totuusarvoa ei voi muokata jälkikäteen.
+	
+	Kuka vain pääsee lisäämään tai poistamaan uutisia etusivulla olevaa linkkiä painamalla.
+	
+	Javascriptillä toteutettavissa olevat funktiot, 
+		jotka poistaisivat tarpeen sivun uudelleenlataamiselle puuttuvat täysin.
