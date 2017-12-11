@@ -38,33 +38,6 @@ public class NewsController {
     @Autowired
     private NewRepository newRepo;
     
-    @PostConstruct
-    public void testData(){
-        Category cat1 = new Category();
-        Category cat2 = new Category();
-        Category cat3 = new Category();
-        Category cat4 = new Category();
-        Category cat5 = new Category();
-        
-        cat1.setName("Urheilu");
-        cat2.setName("Kotimaa");
-        cat3.setName("Ulkomaa");
-        cat4.setName("Politiikka");
-        cat5.setName("Esports");
-        
-        cat1.setActive(1);
-        cat2.setActive(0);
-        cat3.setActive(0);
-        cat4.setActive(1);
-        cat5.setActive(1);
-        
-        catRepo.save(cat1);
-        catRepo.save(cat2);
-        catRepo.save(cat3);
-        catRepo.save(cat4);
-        catRepo.save(cat5);
-    }
-    
     @Transactional
     @GetMapping("/news")
     public String home(Model model){
@@ -141,12 +114,6 @@ public class NewsController {
     @GetMapping("/news/category/{name}")
     public String listByCategory(Model model, @PathVariable String name){
         Category cat = catRepo.findByName(name);
-        /*List<NewsObject> news = new ArrayList<>();
-        for(NewsObject n : newRepo.findAll()){
-            if(n.getCategories().contains(cat)){
-                news.add(n);
-            }
-        }*/
         model.addAttribute("news", cat.getNews());
         Pageable pa = PageRequest.of(0, 5, Sort.Direction.DESC, "date");
         model.addAttribute("recentNews", newRepo.findAll(pa));
